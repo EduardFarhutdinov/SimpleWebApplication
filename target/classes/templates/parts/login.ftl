@@ -28,7 +28,7 @@
 
         </div>
     </div>
-    <#if isRegisterForm>
+ <#if isRegisterForm>
      <div class="form-group row">
          <label class="col-sm-2 col-form-label"> Password: </label>
          <div class="col-sm-3">
@@ -44,33 +44,43 @@
 
          </div>
      </div>
+
     <div class="form-group row">
         <label class="col-sm-2 col-form-label"> Email </label>
         <div class="col-sm-3">
             <input type="email" name="email" value="<#if user??>${user.email}</#if>"
                    class="form-control ${(emailError??)?string('is-invalid','')}"
                    placeholder="example@some.com"/>
-             <#if emailError??>
-                <div class="invalid-feedback">
-                    ${emailError}
-                </div>
-             </#if>
+                 <#if emailError??>
+                    <div class="invalid-feedback">
+                        ${emailError}
+                    </div>
+                 </#if>
 
         </div>
     </div>
-    </#if>
+
+    <div class="col-sm-3">
+        <div class="g-recaptcha" data-sitekey="6LcQOpMUAAAAAOonj159DG2Me1nosNprvKrfKpRt" data-theme="dark" ></div>
+           <#if captchaError??>
+                <div class="alert alert-danger" role="alert">
+                    ${captchaError}
+                </div>
+           </#if>
+    </div>
+
+ </#if>
 
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-   <#if !isRegisterForm> <a href="/registration">Add new user</a></#if>
+    <#if !isRegisterForm> <a href="/registration">Add new user</a></#if>
     <button type="submit" class="btn btn-primary"><#if isRegisterForm>Create<#else> Sign in</#if></button>
-
 </form>
 </#macro>
 
 <#macro logout>
- <form action="/logout" method="post">
-     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-     <button type="submit" class="btn btn-primary" type="submit">Sign Out</button>
- </form>
+     <form action="/logout" method="post">
+         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+         <button type="submit" class="btn btn-primary" type="submit">Sign Out</button>
+     </form>
 
 </#macro>
